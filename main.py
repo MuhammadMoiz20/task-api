@@ -15,3 +15,11 @@ def update_task(task_id: int, task: TaskCreate):
             t.title = task.title
             return t
     raise HTTPException(status_code=404, detail='Task not found')
+from fastapi import HTTPException
+@app.delete('/tasks/{task_id}')
+def delete_task(task_id: int):
+    for i, t in enumerate(tasks):
+        if t.id == task_id:
+            tasks.pop(i)
+            return {'message': 'Deleted'}
+    raise HTTPException(status_code=404, detail='Task not found')
